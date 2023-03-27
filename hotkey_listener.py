@@ -15,7 +15,7 @@ class HotKeyListener:
         self.undo_save_char = undo_save_char.upper()
 
         # hotkey key combinations
-        self.cmb = [
+        self.combos = [
             # quick save (main) hotkey
             {keyboard.Key.alt, keyboard.KeyCode(char=self.save_main_char.lower())},
             {keyboard.Key.alt, keyboard.KeyCode(char=self.save_main_char.upper())},
@@ -35,19 +35,21 @@ class HotKeyListener:
 
     # === Hotkey Listener ===
     def execute(self):
-        if self.is_save_hotkey():
-            self.callback()
-        elif self.is_undo_hotkey()
-            print('undoing last quick save...')
+        if self.is_main_save_hotkey():
+            self.callback(MAIN_BUTTON)
+        elif self.is_other_save_hotkey():
+            self.callback(OTHER_BUTTON)
+        elif self.is_undo_save_hotkey():
+            self.callback(UNDO_BUTTON)
 
     def on_press(self, key):
-        if any([key in z for z in self.cmb]):
+        if any([key in cmb for cmb in self.combos]):
             self.current_keys.add(key)
-            if any(all(k in self.current_keys for k in z) for z in self.cmb):
+            if any(all(key in self.current_keys for key in cmb) for cmb in self.combos):
                 self.execute()
 
     def on_release(self, key):
-        if any([key in z for z in self.cmb]):
+        if any([key in cmb for cmb in self.combos]):
             if key in self.current_keys:
                 self.current_keys.remove(key)
 
@@ -68,7 +70,3 @@ class HotKeyListener:
     def is_undo_save_hotkey(self) -> bool:
         """ Returns whether the triggered hotkey was the `undo save` hotkey. """
         return keyboard.KeyCode(char=self.undo_save_char.lower()) in self.current_keys or keyboard.KeyCode(char=self.undo_save_char.upper()) in self.current_keys
-
-
-hk_listener = HotKeyListener()
-hk_listener.start_keyboard_listener()
