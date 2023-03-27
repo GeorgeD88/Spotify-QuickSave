@@ -3,7 +3,7 @@ from hotkey_listener import HotKeyListener
 from raspi_listener import RasPiListener
 import utils
 
-from buttons import MAIN_BUTTON, OTHER_BUTTON
+from buttons import MAIN_BUTTON, OTHER_BUTTON, UNDO_BUTTON
 EXPORT_FILENAME = "session_exports.json"
 
 
@@ -69,6 +69,7 @@ class QuickSaver:
 
         # write the updated session logs to JSON
         utils.write_to_json({'sessions': sessions}, EXPORT_FILENAME)
+
 
     # === Helpers ===
     def get_track_log(self, playlist_id: str) -> list[str]:
