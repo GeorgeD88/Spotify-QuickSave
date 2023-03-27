@@ -60,9 +60,16 @@ class HotKeyListener:
                 self.current_keys.remove(key)
 
     def start_keyboard_listener(self):
-        with keyboard.Listener(on_press=self.on_press, on_release=self.on_release) as listener:
-            listener.join()
+        print('define listener')
+        self.listener = keyboard.Listener(on_press=self.on_press, on_release=self.on_release)
+        print('start listener')
+        self.listener.start()
+        print('join listener')
+        self.listener.join()
 
+    def stop_keyboard_listener(self):
+        print('stop listener')
+        self.listener.stop()
 
     # === Helpers ===
     def is_main_save_hotkey(self) -> bool:
