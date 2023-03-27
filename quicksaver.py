@@ -10,7 +10,7 @@ EXPORT_FILENAME = "session_exports.json"
 class QuickSaver:
 
     def __init__(self, input_listener, main_playlist_id: str, other_playlist_id: str):
-        self.input_listener = input_listener  # frontend and intermediary layer with backend
+        self.input_listener = input_listener(self.process_input)  # frontend and intermediary layer with backend
         self.controller = QuickSaveController(main_playlist_id, other_playlist_id)
 
         # playlist IDs
@@ -20,6 +20,9 @@ class QuickSaver:
         # keeps log of tracks added during the session
         self.main_track_log = []
         self.other_track_log = []
+
+        # start listener
+        self.input_listener.start_keyboard_listener()
 
 
     # === Quick Saving ===
@@ -52,6 +55,20 @@ class QuickSaver:
         self.get_track_log(result[1]).pop()
 
         return result
+
+
+    # === Input Listener ===
+    def process_input(self, button_pressed: str):
+        if button_pressed is MAIN_BUTTON:
+            print('quick saving to main playlist')
+            self.quick_save(self.main_playlist)
+        elif button_pressed is OTHER_BUTTON:
+            print('quick saving to other playlist')
+            self.quick_save(self.other_playlist)
+        elif button_pressed is UNDO_BUTTON:
+            result = self.undo_last_save()
+            if result is not None:
+                print('undoing last quick save')
 
 
     # === Exporting Logs ===
