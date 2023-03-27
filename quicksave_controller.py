@@ -50,7 +50,7 @@ class QuickSaveController:
 
        # adds track to Spotify playlist and local track list
        self.client.add_track_to_playlist(track_id, playlist_id)
-       playlist_tracks.append(track_id)
+       playlist_tracks.add(track_id)
 
        return self.last_save
 
