@@ -3,8 +3,8 @@ from hotkey_listener import HotKeyListener
 from raspi_listener import RasPiListener
 import utils
 
-from buttons import MAIN_BUTTON, OTHER_BUTTON, UNDO_BUTTON
-EXPORT_FILENAME = "session_exports.json"
+from buttons import MAIN_BUTTON, OTHER_BUTTON, UNDO_BUTTON, QUIT_BUTTON
+EXPORT_FILENAME = "session_exports"
 
 
 class QuickSaver:
@@ -69,6 +69,10 @@ class QuickSaver:
             result = self.undo_last_save()
             if result is not None:
                 print('undoing last quick save')
+        elif button_pressed is QUIT_BUTTON:
+            print('exporting session track logs and quitting app')
+            self.export_session()
+            exit()
 
 
     # === Exporting Logs ===
