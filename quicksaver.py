@@ -1,17 +1,21 @@
 from quicksave_controller import QuickSaveController
-from hotkey_listener import HotKeyListener
-from raspi_listener import RasPiListener
+from notifier import Notifier
 import utils
 
-from buttons import MAIN_BUTTON, OTHER_BUTTON, UNDO_BUTTON, QUIT_BUTTON
+# constants
+from actions import SAVE_MAIN, SAVE_OTHER, UNDO_SAVE, QUIT_APP
+IS_DUPE = "IS_DUPLICATE"  # indicates duplicate track
 EXPORT_FILENAME = "session_exports"
 
 
 class QuickSaver:
+    """ The main central controller component that connects all the components together that make the app.  """
 
     def __init__(self, input_listener, main_playlist_id: str, other_playlist_id: str):
+        print('initializing input listener...')
         self.input_listener = input_listener(self.process_input)  # frontend and intermediary layer with backend
-        self.controller = QuickSaveController(main_playlist_id, other_playlist_id)
+        self.controller = QuickSaveController(main_playlist_id, other_playlist_id)  # backend
+        self.notifier = Notifier()  # triggers system notifications
 
         # playlist IDs
         self.main_playlist = main_playlist_id
@@ -21,9 +25,6 @@ class QuickSaver:
         self.main_track_log = []
         self.other_track_log = []
 
-        # start listener
-        self.input_listener.start_keyboard_listener()
-
 
     # === Quick Saving ===
     def quick_save(self, playlist_id: str) -> tuple[str, str]:
@@ -32,8 +33,12 @@ class QuickSaver:
         # quick save currently playing track and save result
         result = self.controller.quick_save(playlist_id)
 
-        # terminate function if there was no song playing to save
+        # terminate function if there was no currently playing track
         if result is None:
+            return None
+        # triggers duplicate song warning notif and terminates function if the track is already in the playlist
+        elif result is IS_DUPE:
+            self.notifier.trigger_duplicate_song_warning()
             return None
 
         # add track to respective playlist log
@@ -51,28 +56,44 @@ class QuickSaver:
         if result is None:
             return None
 
-        # removes last added track from respective playlist log
-        self.get_track_log(result[1]).pop()
+        # NOTE: if the value of last_save was a duplicate, then it wasn't actually added and is only there to give the user
+        # a chance to remove it. that's why we have to check if the track is in the log before attempting to remove it.
+
+        # removes last added track from respective playlist log if it's not empty and matches the removed track
+        track_log = self.get_track_log(result[1])
+        if len(track_log) > 0 and track_log[-1] == result[0]:
+            track_log.pop()
 
         return result
 
 
     # === Input Listener ===
+    def start_input_listener(self):
+        """ Starts the input listener. """
+        self.input_listener.start_listener()
+
     def process_input(self, button_pressed: str):
-        if button_pressed is MAIN_BUTTON:
-            print('quick saving to main playlist')
-            self.quick_save(self.main_playlist)
-        elif button_pressed is OTHER_BUTTON:
-            print('quick saving to other playlist')
-            self.quick_save(self.other_playlist)
-        elif button_pressed is UNDO_BUTTON:
+        """ Executes the corresponding action based on the callback received. """
+        # quick saves to the main playlist
+        if button_pressed is SAVE_MAIN:
+            result = self.quick_save(self.main_playlist)
+            if result is not None:
+                print('quick saved to main playlist')
+        # quick saves to the other playlist
+        elif button_pressed is SAVE_OTHER:
+            result = self.quick_save(self.other_playlist)
+            if result is not None:
+                print('quick saved to other playlist')
+        # undoes the last quick save
+        elif button_pressed is UNDO_SAVE:
             result = self.undo_last_save()
             if result is not None:
-                print('undoing last quick save')
-        elif button_pressed is QUIT_BUTTON:
+                print('undid last quick save')
+        # exports the session's track logs and quits the app
+        elif button_pressed is QUIT_APP:
             print('exporting session track logs and quitting app')
             self.export_session()
-            exit()
+            self.input_listener.stop_listener()
 
 
     # === Exporting Logs ===
