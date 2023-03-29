@@ -1,10 +1,12 @@
 from spotify_client import SpotifyClient
 
+# constants
 from creds import CLIENT_ID, CLIENT_SECRET, SPOTIPY_REDIRECT_URI, SCOPES
+IS_DUPE = "IS_DUPLICATE"  # indicates duplicate track
 
 
 class QuickSaveController:
-   """ Handles the main quick saving functionality of the app (backend). """
+   """ Controller that handles the main quick saving functionality of the app (backend). """
 
    def __init__(self, main_playlist_id: str, other_playlist_id: str):
        """
@@ -28,7 +30,7 @@ class QuickSaveController:
 
 
    # === Quick Saving ===
-   def quick_save(self, playlist_id: str) -> tuple[str, str]:
+   def quick_save(self, playlist_id: str) -> str:
        """ Quick saves currently playing track to given playlist and user library, and stores arguments in last save. """
 
        # gets currently playing track
@@ -41,12 +43,12 @@ class QuickSaveController:
        self.last_save = (track_id, playlist_id)  # store the arguments for undo
        self.client.add_track_to_library(track_id)  # save track to library
 
-       # gets reference to the respective local playlist track list
+       # gets the reference of the respective playlist's local track list
        playlist_tracks = self.get_local_track_list(playlist_id)
 
-       # terminates the function if the track is already added
+       # terminates the function if the track is already in the playlist (duplicate track)
        if track_id in playlist_tracks:
-           return self.last_save
+           return IS_DUPE
 
        # adds track to Spotify playlist and local track list
        self.client.add_track_to_playlist(track_id, playlist_id)
