@@ -2,8 +2,9 @@ CLIENT_ID = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # <- fill these in
 
 CLIENT_SECRET = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # <- fill these in
 
-SPOTIPY_REDIRECT_URI = "http://localhost:8888/callback"
+SPOTIPY_REDIRECT_URI = "http://localhost:8888/callback"  # DO NOT CHANGE THIS
 
+# DO NOT CHANGE!! these API scopes are absolutely necessary for the app to work
 SCOPES = [
         "user-read-playback-state",  # current playback
         "user-read-currently-playing",  # current user playing track
