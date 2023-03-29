@@ -1,4 +1,5 @@
-from buttons import MAIN_BUTTON, OTHER_BUTTON, UNDO_BUTTON, QUIT_BUTTON
+# constants
+from actions import SAVE_MAIN, SAVE_OTHER, UNDO_SAVE, QUIT_APP
 
 
 class RasPiListener:
