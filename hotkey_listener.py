@@ -84,6 +84,7 @@ class HotKeyListener:
         """ Initializes the keyboard listener and starts listening. """
         self.listener = keyboard.Listener(on_press=self.on_press, on_release=self.on_release)
         self.listener.start()
+        print('start adding!\n')
         self.listener.join()
 
     def stop_listener(self):
