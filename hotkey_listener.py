@@ -72,7 +72,7 @@ class HotKeyListener:
             # adds the pressed key to the set of currently pressed keys
             self.current_keys.add(key)
             # checks if any of the defined hotkeys have been satisfied
-            if any(all(key in self.current_keys for key in cmb) for cmb in self.combos):
+            if any(all(key2 in self.current_keys for key2 in cmb2) for cmb2 in self.combos):
                 self.execute()
 
     def on_release(self, key):
