@@ -55,6 +55,7 @@ class HotKeyListener:
     # === Hotkey Listening ===
     def execute(self):
         """ Executes operation based on the detected hotkey. """
+        print(self.current_keys, end='\n\n')
         if self.is_main_save_hotkey():
             self.callback(SAVE_MAIN)
         elif self.is_other_save_hotkey():
@@ -94,20 +95,16 @@ class HotKeyListener:
     # === Helpers ===
     def is_main_save_hotkey(self) -> bool:
         """ Returns whether the triggered hotkey was the `save to main` hotkey. """
-        # return keyboard.KeyCode(char=self.save_main_char.lower()) in self.current_keys or keyboard.KeyCode(char=self.save_main_char.upper()) in self.current_keys
         return self.SAVE_MAIN_KEYCODE_L in self.current_keys or self.SAVE_MAIN_KEYCODE_U in self.current_keys
 
     def is_other_save_hotkey(self) -> bool:
         """ Returns whether the triggered hotkey was the `save to other` hotkey. """
-        # return keyboard.KeyCode(char=self.save_other_char.lower()) in self.current_keys or keyboard.KeyCode(char=self.save_other_char.upper()) in self.current_keys
         return self.SAVE_OTHER_KEYCODE_L in self.current_keys or self.SAVE_OTHER_KEYCODE_U in self.current_keys
 
     def is_undo_save_hotkey(self) -> bool:
         """ Returns whether the triggered hotkey was the `undo save` hotkey. """
-        # return keyboard.KeyCode(char=self.undo_save_char.lower()) in self.current_keys or keyboard.KeyCode(char=self.undo_save_char.upper()) in self.current_keys
         return self.UNDO_SAVE_KEYCODE_L in self.current_keys or self.UNDO_SAVE_KEYCODE_U in self.current_keys
 
     def is_quit_app_hotkey(self) -> bool:
         """ Returns whether the triggered hotkey was the `quit app` hotkey. """
-        # return keyboard.KeyCode(char=self.quit_app_char.lower()) in self.current_keys or keyboard.KeyCode(char=self.quit_app_char.upper()) in self.current_keys
         return self.QUIT_APP_KEYCODE_L in self.current_keys or self.QUIT_APP_KEYCODE_U in self.current_keys
