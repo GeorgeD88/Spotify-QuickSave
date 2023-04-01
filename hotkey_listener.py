@@ -55,7 +55,6 @@ class HotKeyListener:
     # === Hotkey Listening ===
     def execute(self):
         """ Executes operation based on the detected hotkey. """
-        print(self.current_keys, end='\n\n')
         if self.is_main_save_hotkey():
             self.callback(SAVE_MAIN)
         elif self.is_other_save_hotkey():
