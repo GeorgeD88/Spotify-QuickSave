@@ -54,6 +54,7 @@ class QuickSaver:
 
         # terminate function if there was no last save to undo
         if result is None:
+            self.notifier.trigger_max_undo_warning()
             return None
 
         # NOTE: if the value of last_save was a duplicate, then it wasn't actually added and is only there to give the user

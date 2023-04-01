@@ -16,6 +16,15 @@ class Notifier:
             app_name=self.app_name
         )
 
+    def trigger_max_undo_warning(self, title: str = None, message: str = None):
+        """ Triggers a system notification to warn that only one undo is allowed per save. """
+        # the default arguments allow one argument to be edited instead of building the notification from scratch
+        notification.notify(
+            title='Max Undo' if title is None else title,
+            message='You cannot undo more than once in a row!' if message is None else message,
+            app_name=self.app_name
+        )
+
     def trigger_custom_notification(self, title: str, message: str):
         """ Triggers a system notification using the given title and message arguments. """
         notification.notify(
