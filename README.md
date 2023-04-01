@@ -1,7 +1,7 @@
 # Spotify-QuickSave :headphones::notes:
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-orange.svg)](https://www.gnu.org/licenses/gpl-3.0)
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54&style=flat)
-![Spotify](https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white&style=flat)
+[![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54&style=flat)](https://www.python.org/)
+[![Spotify](https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white&style=flat)](https://developer.spotify.com/dashboard)
 
 Welcome to **Spotify QuickSave**! The Python app that lets you easily save songs to your Spotify library and playlists with just a simple keyboard shortcut and no interruption to your flow of work.
 
@@ -23,7 +23,7 @@ Ready to give it a try? Download the repo and follow the instructions below to g
 
 ### Prerequisites :package:
 Before you can run the project, make sure you have the following dependencies installed:
-- Python 3.X or higher <!-- TODO: figure out the lowest you can use -->
+- Python 3.7 or higher _(you can try using lower)_
 - [Spotipy](https://pypi.org/project/spotipy/) Python library `pip install spotipy`
 - [Pynput](https://pypi.org/project/pynput/) Python library `pip install pynput`
 - [Plyer](https://pypi.org/project/plyer/) Python library `pip install plyer`
