@@ -1,21 +1,20 @@
 from quicksave_controller import QuickSaveController
-from notifier import Notifier
 import utils
 
 # constants
-from actions import SAVE_MAIN, SAVE_OTHER, UNDO_SAVE, QUIT_APP
+from actions import TOGGLE_LIKE, SAVE_MAIN, SAVE_OTHER, UNDO_SAVE, QUIT_APP
 IS_DUPE = "IS_DUPLICATE"  # indicates duplicate track
 EXPORT_FILENAME = "session_exports"
 
 
 class QuickSaver:
-    """ The main central controller component that connects all the components together that make the app.  """
+    """ The main central component that connects all the components together that make the app.  """
 
-    def __init__(self, input_listener, main_playlist_id: str, other_playlist_id: str):
-        print('initializing input listener...')
-        self.input_listener = input_listener(self.process_input)  # frontend and intermediary layer with backend
+    def __init__(self, input_listener, notifier, main_playlist_id: str, other_playlist_id: str):
+        print('initializing input listener, controller, and notifier...')
+        self.input_listener = input_listener(self.process_input)  # frontend
         self.controller = QuickSaveController(main_playlist_id, other_playlist_id)  # backend
-        self.notifier = Notifier()  # triggers system notifications
+        self.notifier = notifier()  # triggers notifiers/responses (such as notifications/LEDs)
 
         # playlist IDs
         self.main_playlist = main_playlist_id
@@ -25,24 +24,43 @@ class QuickSaver:
         self.main_track_log = []
         self.other_track_log = []
 
+        # starts input listener and notifier
+        self.input_listener.start_listener()
+        self.notifier.start_notifier()
 
     # === Quick Saving ===
+    def toggle_like(self) -> tuple[str, str]:
+        """ Toggles currently playing track's library save (likes/unlikes track). """
+
+        # toggle like of currently playing track and save result
+        result = self.controller.toggle_like()
+
+        # terminate function if there was no track currently playing
+        if result is None:
+            return None
+        # triggers notif if song was liked/saved
+        elif result[1] is True:
+            self.notifier.trigger_song_saved_indicator()
+
+        return result
+
     def quick_save(self, playlist_id: str) -> tuple[str, str]:
         """ Quick saves currently playing track to given playlist and use library. """
 
         # quick save currently playing track and save result
         result = self.controller.quick_save(playlist_id)
 
-        # terminate function if there was no currently playing track
+        # terminate function if there was no track currently playing
         if result is None:
             return None
         # triggers duplicate song warning notif and terminates function if the track is already in the playlist
         elif result is IS_DUPE:
             self.notifier.trigger_duplicate_song_warning()
             return None
-
-        # add track to respective playlist log
-        self.get_track_log(playlist_id).append(result[0])
+        # song was successfully saved
+        else:
+            self.get_track_log(playlist_id).append(result[0])  # add track to respective playlist log
+            self.notifier.SONG_SAVE # <- TODO
 
         return result
 
@@ -69,14 +87,14 @@ class QuickSaver:
 
 
     # === Input Listener ===
-    def start_input_listener(self):
-        """ Starts the input listener. """
-        self.input_listener.start_listener()
-
     def process_input(self, button_pressed: str):
         """ Executes the corresponding action based on the callback received. """
+        # saves only to user's library (likes track)
+        if button_pressed is TOGGLE_LIKE:
+            result = self.toggle_like()[1]  # whether track was saved/removed
+            print('saved track to library' if result is True else 'removed track from library')
         # quick saves to the main playlist
-        if button_pressed is SAVE_MAIN:
+        elif button_pressed is SAVE_MAIN:
             result = self.quick_save(self.main_playlist)
             if result is not None:
                 print('quick saved to main playlist')
