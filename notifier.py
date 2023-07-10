@@ -7,6 +7,24 @@ class Notifier:
     def __init__(self, app_name: str = 'Spotify QuickSave'):
         self.app_name = app_name
 
+    def start_notifier(self):
+        """ Triggers a system notification to indicate that QuickSave is up and running. """
+        # the default arguments allow one argument to be edited instead of building the notification from scratch
+        notification.notify(
+            title='Spotify-QuickSave is up and running!',
+            message='Start jamming and saving songs as soon as you\'re ready!',
+            app_name=self.app_name
+        )
+
+    def trigger_song_saved_indicator(self, title: str = None, message: str = None):
+        """ Triggers a system notification to indicate that a song was saved. """
+        # the default arguments allow one argument to be edited instead of building the notification from scratch
+        notification.notify(
+            title='Song was Saved' if title is None else title,
+            message='The currently playing song was saved.' if message is None else message,
+            app_name=self.app_name
+        )
+
     def trigger_duplicate_song_warning(self, title: str = None, message: str = None):
         """ Triggers a system notification to warn that a duplicate song was attempted to be added. """
         # the default arguments allow one argument to be edited instead of building the notification from scratch
