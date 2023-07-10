@@ -11,7 +11,7 @@ class SpotifyClient:
             client_secret=client_secret,
             redirect_uri=redirect_uri,
             scope=scopes
-        ))
+        ), requests_timeout=10)  # this should fix the constant timeout errors
 
     def my_id(self) -> str:
         """ Returns the ID of the user currently authenticated with the Spotify API. """
@@ -28,7 +28,7 @@ class SpotifyClient:
         return self.sp.current_user_playing_track()['item']['id'] if self.is_playback_active() else None
 
 
-    # === Library & Playlists ===
+    # === Library ===
     def add_track_to_library(self, track_id: str):
         """ Adds the given track to the user's Spotify library. """
         self.sp.current_user_saved_tracks_add([track_id])
@@ -37,6 +37,8 @@ class SpotifyClient:
         """ Removes the given track from the user's Spotify library. """
         self.sp.current_user_saved_tracks_delete([track_id])
 
+
+    # === Playlists ===
     def add_track_to_playlist(self, track_id: str, playlist_id: str):
         """ Adds the given track to the given playlist. """
         self.sp.playlist_add_items(playlist_id, [track_id])
