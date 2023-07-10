@@ -3,11 +3,11 @@
 [![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54&style=flat)](https://www.python.org/)
 [![Spotify](https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white&style=flat)](https://developer.spotify.com/dashboard)
 
-Welcome to **Spotify QuickSave**! The Python app that lets you easily save songs to your Spotify library and playlists with just a simple keyboard shortcut and no interruption to your flow of work.
+Welcome to **Spotify QuickSave**! The Python app that lets you easily save songs to your Spotify library and playlists without any interruption to your workflow.
 
-I found that when I was working on something while listening to a new playlist, I would keep finding new songs I loved and wanted to add to my library. The problem with that is that having to switch to Spotify during every new song to add it to my library interfered a ton with my work. This is where **Spotify QuickSave** comes in. With QuickSave, all it takes is a simple keyboard shortcut and the currently playing song gets quickly saved to your library and to the playlist you specified when you ran the app. And if for some reason you decided you don't actually want to save the song, you can undo with another keyboard shortcut and the last song you just saved gets unsaved and removed from the playlist.
+I found that when I was doing work while listening to a new playlist, I would keep finding new songs I loved and wanted to save to my library. The problem with that is having to switch to Spotify on almost every new song to add it to my library was very disruptive to my workflow. This drove me to create **Spotify QuickSave**. With QuickSave, all it takes is a quick press of a button and the currently playing song gets quickly saved to your library and previously specified playlist. If you for some reason change your mind about saving that song, you can easily undo the last save with the push of another button.
 
-It that's easy! Now you can effortlessly save the songs you love while you're browsing the web, working on a project, or just listening to music. I actually found myself constantly needing QuickSave **_while_ I was working on it!** and I'm even using it while I write this README.
+It that's easy! Now you can effortlessly save the songs you love while you're browsing the web, doing homework, working on a project, etc. I actually found myself constantly needing QuickSave **_while_ I was developing it,** and I'm even using it while I write this README.
 
 Ready to give it a try? Download the repo and follow the instructions below to get started!
 
@@ -15,9 +15,10 @@ Ready to give it a try? Download the repo and follow the instructions below to g
 **Spotify QuickSave** is released under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html). See the [LICENSE](LICENSE) file for more details.
 
 ## What I Learned :books:
-- Designing very robust system architecture
+- Designing very robust system architecture, learning software design patterns such as "Dependency Injection"
 - Triggering system notifications
 - Detecting hotkeys/keyboard shortcuts
+- Working with Raspberry Pis and wiring circuits with buttons and LEDs
 
 ## Getting Started :rocket:
 
@@ -38,9 +39,9 @@ To use the application, you'll need to obtain your Spotify API keys, which you c
 Follow these steps if you need help:
 1. Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) and log in with your Spotify account.
 2. Click on the _"Create an App"_ button and fill out the required fields.
-3. After creating the app, open the _"Settings"_ tab to view your client ID and secret; you'll need them in the next step. Be sure to add http://localhost:8888/callback to the list of Redirect URIs for your app.
+3. After creating the app, open the _"Settings"_ tab to view your client ID and secret, you'll need them in the next step. While you're here, you'll also need to add http://localhost:8888/callback to the Redirect URIs of your app.
 
-Once you have your client ID and secret, open the `creds_template.py` file in the project directory and replace the marked variables with your client ID and secret; _the variables are marked with "fill this in" comments._ Then rename the file to `creds.py` and you're ready to use the app!
+Once you have your client ID and secret, open the `creds_template.py` file in the project directory and replace the marked variables with your client ID and secret (_the variables are marked with "fill this in" comments)._  Then rename the file to `creds.py` and you're ready to use the app!
 
 ### Usage :technologist:
 To use QuickSave, simply execute the `app.py` file, and follow this usage guide:   
