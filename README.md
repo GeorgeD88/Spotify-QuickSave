@@ -1,9 +1,10 @@
 # Spotify-QuickSave :headphones::notes:
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-orange.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54&style=flat)](https://www.python.org/)
+![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
 [![Spotify](https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white&style=flat)](https://developer.spotify.com/dashboard)
 
-Welcome to **Spotify QuickSave**! The Python app that lets you easily save songs to your Spotify library and playlists without any interruption to your workflow.
+Welcome to **Spotify QuickSave**! The Raspberry Pi-powered Python app that enhances your music listening experience by enabling you to save songs with a quick button press, minimizing interruption to your workflow.
 
 I found that when I was doing work while listening to a new playlist, I would keep finding new songs I loved and wanted to save to my library. The problem with that is having to switch to Spotify on almost every new song to add it to my library was very disruptive to my workflow. This drove me to create **Spotify QuickSave**. With QuickSave, all it takes is a quick press of a button and the currently playing song gets quickly saved to your library and previously specified playlist. If you for some reason change your mind about saving that song, you can easily undo the last save with the push of another button.
 
