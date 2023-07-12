@@ -1,7 +1,6 @@
 # Raspberry Pi
-from gpiozero import Button, LED
+from gpiozero import Button
 from signal import pause
-from time import sleep
 
 # constants
 from actions import TOGGLE_LIKE, SAVE_MAIN, SAVE_OTHER, UNDO_SAVE, QUIT_APP
@@ -27,6 +26,11 @@ class RasPiListener:
     def start_listener(self):
         """ Starts listener by running the signal pause. """
         print('start saving! 🎧🥧\n')
+        pause()  # signal pause for RasPi to wait for inputs
+
+    def stop_listener(self):
+        """ Placeholder because the parent component has to call this function to work. """
+        print('thanks for stopping by! hopefully I was helpful :)')
 
     def toggle_like(self):
         self.callback(TOGGLE_LIKE)
