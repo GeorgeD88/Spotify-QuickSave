@@ -120,16 +120,16 @@ class QuickSaver:
         """ Exports the session's track logs to JSON. """
 
         # terminate function if there are no logs to export
-        if not self.main_track_log and not self.other_track_log:
+        if len(self.main_track_log) == 0 and len(self.other_track_log) == 0:
             return
 
         # get the existing session logs, build the current session export, and append it to the sessions
-        sessions = utils.read_from_json(EXPORT_FILENAME)['sessions']
+        sessions = utils.read_from_json(EXPORT_FILENAME)
         curr_session = {'main': self.main_track_log, 'other': self.other_track_log}
         sessions.append(curr_session)
 
         # write the updated session logs to JSON
-        utils.write_to_json({'sessions': sessions}, EXPORT_FILENAME)
+        utils.write_to_json(sessions, EXPORT_FILENAME)
 
 
     # === Helpers ===
