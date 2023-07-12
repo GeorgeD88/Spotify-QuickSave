@@ -1,7 +1,7 @@
 from plyer import notification
 
 
-class Notifier:
+class SystemNotifier:
     """ Notifier class that allows the app to trigger system notifications. """
 
     def __init__(self, app_name: str = 'Spotify QuickSave'):
