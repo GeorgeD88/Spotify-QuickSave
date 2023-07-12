@@ -125,13 +125,13 @@ To use QuickSave with hotkeys, make the changes below to the `app.py` code:
 # import these modules
 from hotkey_listener import HotKeyListener
 from system_notifier import SystemNotifier  # system notifications
-from console_notifier import ConsoleNotifier  # console outputs
+from notifier_filler import NotifierFiller  # no extra notifs
 
 # pass these classes as arguments
 quicksaver = QuickSaver(HotKeyListener, SystemNotifier, ...)
 ```
 
-For both the hotkey and console method, you have the option of switching between system notifications or console outputs. To do this just import the notifier you prefer, `SystemNotifier` or `ConsoleNotifier`, and pass it as the argument for the notifier parameter. You can use the console notifier just as a way to silence/not use system notifications, because they're easily ignored/minimized.
+For both the hotkey and console method, you have the option of switching between system notifications or console outputs. To do this just import the notifier you prefer, `SystemNotifier` or `NotifierFiller`, and pass it as the argument for the notifier parameter. QuickSaver prints to the console anyways, regardless of how you set it up. So to use console outputs we simply pass a notifier filler that does nothing called `NotifierFiller`. You can use the notifier filler just as a way to silence/not use system notifications, because the console outputs can just be ignored/minimized.
 
 Then simply execute the `app.py` file, and follow this keyboard shortcut guide:
 - Use `Alt + T` to **toggle like** of the currently playing song (like/unlike).
@@ -147,7 +147,7 @@ To use QuickSave with console input, make the changes below to the `app.py` code
 # import these modules
 from console_listener import ConsoleListener
 from system_notifier import SystemNotifier  # system notifications
-from console_notifier import ConsoleNotifier  # console outputs
+from notifier_filler import NotifierFiller  # no extra notifs
 
 # pass these classes as arguments
 quicksaver = QuickSaver(ConsoleListener, SystemNotifier, ...)
