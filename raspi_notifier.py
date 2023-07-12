@@ -3,22 +3,18 @@ from gpiozero import LED
 from signal import pause
 from time import sleep
 
-# constants
-from actions import TOGGLE_LIKE, SAVE_MAIN, SAVE_OTHER, UNDO_SAVE, QUIT_APP
-
 
 class RasPiNotifier:
     """ RasPi notifier class that allows the app to trigger LED responses on the Pi. """
 
     def __init__(self):
-        self.success_led = LED(16)            # green
-        self.error_led = LED(20)              # red
-        pause()  # signal pause for RasPi to wait for inputs
+        self.success_led = LED(16)   # green wire
+        self.error_led = LED(20)     # red wire
 
     def start_notifier(self):
         """ Signals that the RasPi is ready to go. """
         self.trigger_ready_lights()
-        pause()
+        pause()  # signal pause for RasPi to wait for inputs
 
     def trigger_song_saved_indicator(self, duration=1):
         """ Triggers a green LED flash to indicate that a song was saved. """
