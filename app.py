@@ -1,6 +1,6 @@
 from quicksaver import QuickSaver
-from hotkey_listener import HotKeyListener
 from raspi_listener import RasPiListener
+from raspi_notifier import RasPiNotifier
 import utils
 
 
@@ -17,7 +17,7 @@ def main():
 
     # initialize the main quick saver component and start the input listener
     print('starting QuickSave app!')
-    quicksaver = QuickSaver(HotKeyListener, utils.spotify_id_from_link(main_playlist), utils.spotify_id_from_link(other_playlist))
+    quicksaver = QuickSaver(RasPiListener, RasPiNotifier, utils.spotify_id_from_link(main_playlist), utils.spotify_id_from_link(other_playlist))
     quicksaver.start_input_listener()
 
 
