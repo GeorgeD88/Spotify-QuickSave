@@ -60,7 +60,7 @@ class QuickSaver:
         # song was successfully saved
         else:
             self.get_track_log(playlist_id).append(result[0])  # add track to respective playlist log
-            self.notifier.SONG_SAVE # <- TODO
+            self.notifier.trigger_song_saved_indicator()
 
         return result
 
